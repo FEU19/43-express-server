@@ -21,6 +21,14 @@ app.get('/index.html', (req, res) => {
 })
 
 
+app.get('/fruits', (req, res) => {
+    console.log('GET /fruits', req.query);
+    let fruits = ['strawberry', 'pear', 'apple', 'banana', 'orange'];
+    let index = req.query.index;
+    res.send(fruits[index]);
+})
+
+
 // Start server
 app.listen(port, () => {
     console.log('Web server listening on port ' + port);
