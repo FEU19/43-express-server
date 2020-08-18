@@ -27,9 +27,10 @@ app.get('/index.html', (req, res) => {
 })
 
 
+let fruits = ['strawberry', 'pear', 'apple', 'banana', 'orange'];
+
 app.get('/fruits', (req, res) => {
     console.log('GET /fruits', req.query);
-    let fruits = ['strawberry', 'pear', 'apple', 'banana', 'orange'];
     let index = req.query.index;  // '?index=2' -> { index: 2 }
     let maybeFruit = fruits[index];
     if( maybeFruit ) {
@@ -38,6 +39,15 @@ app.get('/fruits', (req, res) => {
         index = Math.floor(Math.random() * fruits.length);
         res.send(fruits[index]);
     }
+})
+
+app.get('/fruits/add', (req, res) => {
+    console.log('GET /fruits/add', req.query);
+    let name = req.query.name;
+    fruits.push(name);
+    // push lägger till nya objekt SIST i en array
+    // shift lägger till nya objekt FÖRST i en array
+    res.send(`Added "${name}" to fruit list.`)
 })
 
 
