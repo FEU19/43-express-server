@@ -6,6 +6,7 @@ const port = 1234;  // arbitrary port number
 
 // MIDDLEWARE
 // use-funktionen registrerar en middleware function
+// 3 parametrar -> vanlig middleware
 let logger = (req, res, next) => {
     // a "real" logger function would save data to a file
     console.log(`LOGGER: ${req.method} ${req.url}`);
@@ -76,6 +77,21 @@ app.get('/fruits/add/:newFruit', (req, res) => {
     // push lägger till nya objekt SIST i en array
     // shift lägger till nya objekt FÖRST i en array
     res.send(`Added "${name}" to fruit list.`)
+})
+
+app.get('/cause-error', (req, res) => {
+    // throw new Error('example')
+    let notAFunction = null;
+    notAFunction();
+})
+
+
+// ERROR HANDLING MIDDLEWARE
+// måste ligga sist - undantaget som bekräftar regeln
+// 4 parametrar -> error handling middleware
+app.use( (error, req, res, next) => {
+    console.log('Error handling', error);
+    res.status(500).send('Internal server error');
 })
 
 
