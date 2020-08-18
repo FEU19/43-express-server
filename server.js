@@ -49,6 +49,14 @@ app.get('/fruits/add', (req, res) => {
     // shift lägger till nya objekt FÖRST i en array
     res.send(`Added "${name}" to fruit list.`)
 })
+app.get('/fruits/add/:newFruit', (req, res) => {
+    console.log('GET /fruits/add/:newFruit', req.params);
+    let name = req.params.newFruit;
+    fruits.push(name);
+    // push lägger till nya objekt SIST i en array
+    // shift lägger till nya objekt FÖRST i en array
+    res.send(`Added "${name}" to fruit list.`)
+})
 
 
 
