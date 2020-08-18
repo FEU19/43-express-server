@@ -4,6 +4,30 @@ const app = express()
 const port = 1234;  // arbitrary port number
 
 
+// MIDDLEWARE
+// use-funktionen registrerar en middleware function
+let logger = (req, res, next) => {
+    // a "real" logger function would save data to a file
+    console.log(`LOGGER: ${req.method} ${req.url}`);
+
+    next();  // fortsätt med nästa middleware
+}
+app.use( logger );
+
+let auth = (req, res, next) => {
+    // Let's pretend another.html is secret and cannot be accessed by normal visitors
+    if( req.url.includes('another.html') ) {
+        res.send('Another.html is forbidden');
+    } else {
+        next();
+    }
+}
+app.use( auth );
+
+app.use( express.static(__dirname + '/public') )
+app.use( express.static(__dirname + '/static') )
+
+
 // ROUTES
 app.get('/', (req, res) => {
     console.log('GET /  (index.html)');
@@ -21,10 +45,6 @@ app.get('/hello', (req, res) => {
     res.send('Hello!')
 })
 
-app.get('/index.html', (req, res) => {
-    console.log('GET /index.html');
-    res.sendFile(__dirname + '/public/index.html')
-})
 
 
 let fruits = ['strawberry', 'pear', 'apple', 'banana', 'orange'];
