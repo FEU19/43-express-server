@@ -5,8 +5,14 @@ const port = 1234;  // arbitrary port number
 
 
 // ROUTES
+app.get('/', (req, res) => {
+    console.log('GET /  (index.html)');
+    res.sendFile(__dirname + '/public/index.html');
+})
+
+// samma route som den ovanför - kommer aldrig att köras
 app.get('/', (request, response) => {
-    console.log('GET /');
+    console.log('GET /  (cake)');
     response.send('The cake is a lie')
 })
 
@@ -33,6 +39,7 @@ app.get('/fruits', (req, res) => {
         res.send(fruits[index]);
     }
 })
+
 
 
 // Start server
